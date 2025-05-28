@@ -1,13 +1,14 @@
 package com.mailingsystem.mail.api.controller;
 
 import com.mailingsystem.mail.api.dto.MailRequest;
+import com.mailingsystem.mail.api.dto.MailResponse;
+import com.mailingsystem.mail.api.dto.MailStatusResponse;
 import com.mailingsystem.mail.application.service.MailCommandService;
+import com.mailingsystem.mail.application.service.MailQueryService;
+import com.mailingsystem.mail.domain.entity.Mail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/mails")
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MailController {
 
     private final MailCommandService mailCommandService;
+    private final MailQueryService mailQueryService;
 
     @PostMapping
     public ResponseEntity<Void> sendMail(@RequestBody MailRequest request) {
@@ -23,6 +25,19 @@ public class MailController {
                 request.getSubject(),
                 request.getBody()
         );
-        return ResponseEntity.ok().build();
+        return ResponseEntity.accepted().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MailResponse> getMailStatus(@PathVariable Long id) {
+        Mail mail = mailQueryService.getMail(id);
+        return ResponseEntity.ok(new MailResponse(mail));
+    }
+
+    @GetMapping("/{id}/status")
+    public ResponseEntity<MailStatusResponse> getMailStatusOnly(@PathVariable Long id) {
+        Mail mail = mailQueryService.getMail(id);
+        return ResponseEntity.ok(new MailStatusResponse(mail.getId(), mail.getStatus()));
+    }
+
 }
