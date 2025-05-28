@@ -37,9 +37,10 @@ public class Mail {
 
     // 상태 전이 메서드 (도메인 로직)
     public void markAsSent() {
-
+        this.status = MailStatus.SENT;
     }
 
     public void markAsFailed() {
+        this.status = MailStatus.FAILED;
     }
 }
