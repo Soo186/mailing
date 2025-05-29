@@ -1,5 +1,6 @@
 package com.mailingsystem.mail.api.controller;
 
+import com.mailingsystem.mail.api.dto.MailFromAddressRequest;
 import com.mailingsystem.mail.api.dto.MailRequest;
 import com.mailingsystem.mail.api.dto.MailResponse;
 import com.mailingsystem.mail.api.dto.MailStatusResponse;
@@ -38,6 +39,16 @@ public class MailController {
     public ResponseEntity<MailStatusResponse> getMailStatusOnly(@PathVariable Long id) {
         Mail mail = mailQueryService.getMail(id);
         return ResponseEntity.ok(new MailStatusResponse(mail.getId(), mail.getStatus()));
+    }
+
+    @PostMapping("/address-book")
+    public ResponseEntity<Void> sendMailByAddress(@RequestBody MailFromAddressRequest request) {
+        mailCommandService.sendMailByAddressBookId(
+                request.getAddressId(),
+                request.getSubject(),
+                request.getBody()
+        );
+        return ResponseEntity.accepted().build();
     }
 
 }
