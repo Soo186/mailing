@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.3
+    container_name: mysql-mailing
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Qwaszx123!!
+      MYSQL_DATABASE: mailing
+      MYSQL_USER: mailing_user
+      MYSQL_PASSWORD: mailing_pass
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+
+volumes:
+  mysql-data:
