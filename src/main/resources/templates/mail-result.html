@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>메일 전송 결과</title>
+</head>
+<body>
+<h2>메일 전송 결과</h2>
+<p>메일 ID: <span id="mail-id" th:text="${status.id}"></span></p>
+<p>전송 상태: <span id="mail-status" th:text="${status.status}">PENDING</span></p>
+
+<script>
+    const mailId = /*[[${status.id}]]*/ '1'; // 타임리프가 주입해줌
+    const statusSpan = document.getElementById("mail-status");
+
+    const interval = setInterval(() => {
+        fetch(`/api/mails/${mailId}/status`)
+            .then(res => res.json())
+            .then(data => {
+                statusSpan.innerText = data.status;
+                if (data.status === 'SENT' || data.status === 'FAILED') {
+                    clearInterval(interval);
+                }
+            });
+    }, 1000);
+</script>
+</body>
+</html>

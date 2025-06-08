@@ -1,0 +1,22 @@
+<!--/* @thymesVar id="mailRequest" type="com.mailingsystem.mail.api.dto.MailRequest" */-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>메일 보내기</title>
+</head>
+<body>
+<h2>메일 전송 폼</h2>
+<form th:action="@{/mails/send}" th:object="${mailRequest}" method="post">
+    <label for="to">받는 사람:</label>
+    <input type="email" id="to" th:field="*{to}" required /><br/>
+
+    <label for="subject">제목:</label>
+    <input type="text" id="subject" th:field="*{subject}" required /><br/>
+
+    <label for="body">내용:</label><br/>
+    <textarea id="body" th:field="*{body}" rows="5" cols="50" required></textarea><br/>
+
+    <button type="submit">보내기</button>
+</form>
+</body>
+</html>
