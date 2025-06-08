@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>주소록 리스트</title>
+</head>
+<body>
+<h2>주소록</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>이름</th>
+        <th>이메일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${entries}">
+        <td th:text="${entry.name}">이름</td>
+        <td th:text="${entry.email}">이메일</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
