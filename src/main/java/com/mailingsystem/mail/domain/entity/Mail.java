@@ -2,8 +2,10 @@ package com.mailingsystem.mail.domain.entity;
 
 import com.mailingsystem.mail.domain.enums.MailStatus;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class Mail {
 
     private Long id;
