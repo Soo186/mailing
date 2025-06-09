@@ -1,4 +1,4 @@
-    package com.mailingsystem.mail.infra.service;
+package com.mailingsystem.mail.infra.service;
 
 public interface GmailClient {
     boolean send(String to, String subject, String body);

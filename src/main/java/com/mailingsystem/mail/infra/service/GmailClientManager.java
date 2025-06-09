@@ -1,5 +1,6 @@
 package com.mailingsystem.mail.infra.service;
 
+import com.mailingsystem.mail.config.GmailProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,14 +14,14 @@ import java.util.Optional;
 public class GmailClientManager {
 
     private final GmailClientFactory factory;
-
+    private final GmailProperties gmailProperties;
     private final List<GmailClient> clients = new ArrayList<>();
 
     @PostConstruct
     public void init() {
-        clients.add(factory.create("cred1.json"));
-        clients.add(factory.create("cred2.json"));
-        // 필요 시 더 추가
+        for (String credential : gmailProperties.getCredentials()) {
+            clients.add(factory.create(credential));
+        }
     }
 
     public Optional<GmailClient> getAvailableClient() {
