@@ -1,5 +1,7 @@
 package com.mailingsystem.mail.config;
 
+import com.mailingsystem.mail.infra.service.GmailClient;
+import com.mailingsystem.mail.infra.service.GmailClientFactory;
 import com.mailingsystem.mail.infra.service.GmailClientImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,11 +14,12 @@ import java.util.List;
 public class GmailClientConfig {
 
     private final GmailProperties gmailProperties;
+    private final GmailClientFactory gmailClientFactory;
 
     @Bean
-    public List<GmailClientImpl> gmailClients() {
+    public List<GmailClient> gmailClients() {
         return gmailProperties.getCredentials().stream()
-                .map(GmailClientImpl::new)
+                .map(gmailClientFactory::create)
                 .toList();
     }
 }
